@@ -1,0 +1,141 @@
+cubes:
+  - name: pessoas
+    sql_table: dbo.tb_pessoa
+    
+    joins: []
+    
+    dimensions:
+      - name: cod_pessoa
+        sql: cod_pessoa
+        type: number
+        primary_key: true
+        
+      - name: nom_pessoa
+        sql: nom_pessoa
+        type: string
+        description: Full name of the person or company
+        
+      - name: nom_reduzido_pessoa
+        sql: nom_reduzido_pessoa
+        type: string
+        description: Short/abbreviated name
+        
+      - name: num_pessoa
+        sql: num_pessoa
+        type: string
+        description: Person identifier number
+        
+      - name: dta_cadastramento
+        sql: dta_cadastramento
+        type: time
+        description: Registration date
+        
+      - name: ind_natureza_pessoa
+        sql: ind_natureza_pessoa
+        type: number
+        description: Person nature indicator (1=Individual, 2=Company)
+        
+      - name: tipo_pessoa
+        sql: |
+          CASE 
+            WHEN {CUBE}.ind_natureza_pessoa = 1 THEN 'Pessoa Física'
+            WHEN {CUBE}.ind_natureza_pessoa = 2 THEN 'Pessoa Jurídica'
+            ELSE 'Não Especificado'
+          END
+        type: string
+        description: Person type (Individual or Company)
+        
+      - name: ind_status_pessoa
+        sql: ind_status_pessoa
+        type: number
+        description: Person status indicator
+        
+      - name: status_pessoa
+        sql: |
+          CASE 
+            WHEN {CUBE}.ind_status_pessoa = 1 THEN 'Ativo'
+            WHEN {CUBE}.ind_status_pessoa = 0 THEN 'Inativo'
+            ELSE 'Não Especificado'
+          END
+        type: string
+        description: Person status (Active or Inactive)
+        
+      - name: ind_pessoa_empresa
+        sql: ind_pessoa_empresa
+        type: boolean
+        description: Indicates if person is a company
+        
+      - name: ind_retencao_iss_pessoa
+        sql: ind_retencao_iss_pessoa
+        type: boolean
+        description: ISS retention indicator
+        
+      - name: ind_forn_homolog
+        sql: ind_forn_homolog
+        type: boolean
+        description: Homologated supplier indicator
+        
+      - name: ind_restrito
+        sql: ind_restrito
+        type: boolean
+        description: Restricted indicator
+        
+      - name: ind_desp_fixa
+        sql: ind_desp_fixa
+        type: boolean
+        description: Fixed expense indicator
+        
+      - name: id_host
+        sql: id_host
+        type: string
+        
+      - name: id_row
+        sql: id_row
+        type: string
+    
+    measures:
+      - name: count
+        type: count
+        description: Total number of people/companies
+        
+      - name: count_pessoas_fisicas
+        type: count
+        filters:
+          - sql: ${CUBE}.ind_natureza_pessoa = 1
+        description: Count of individuals (Pessoas Físicas)
+        
+      - name: count_pessoas_juridicas
+        type: count
+        filters:
+          - sql: ${CUBE}.ind_natureza_pessoa = 2
+        description: Count of legal entities (Pessoas Jurídicas)
+        
+      - name: count_ativos
+        type: count
+        filters:
+          - sql: ${CUBE}.ind_status_pessoa = 1
+        description: Count of active persons
+        
+      - name: count_inativos
+        type: count
+        filters:
+          - sql: ${CUBE}.ind_status_pessoa = 0
+        description: Count of inactive persons
+        
+      - name: count_empresas
+        type: count
+        filters:
+          - sql: ${CUBE}.ind_pessoa_empresa = 1
+        description: Count of companies
+        
+      - name: count_fornecedores_homologados
+        type: count
+        filters:
+          - sql: ${CUBE}.ind_forn_homolog = 1
+        description: Count of homologated suppliers
+        
+      - name: count_restrito
+        type: count
+        filters:
+          - sql: ${CUBE}.ind_restrito = 1
+        description: Count of restricted persons
