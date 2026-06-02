@@ -1,0 +1,33 @@
+cubes:
+  - name: tipos_titulo
+    sql_table: dbo.tb_tipo_titulo
+    description: Tipos de títulos financeiros (tabela de domínio)
+    
+    public: false
+    
+    joins: []
+    
+    dimensions:
+      - name: cod_tipo_titulo
+        sql: cod_tipo_titulo
+        type: number
+        primary_key: true
+        description: Código do tipo de título
+        
+      - name: des_tipo_titulo
+        sql: des_tipo_titulo
+        type: string
+        description: Descrição do tipo de título
+        
+      - name: id_host
+        sql: id_host
+        type: string
+        
+      - name: id_row
+        sql: id_row
+        type: string
+    
+    measures:
+      - name: count
+        type: count
+        description: Quantidade de tipos de título

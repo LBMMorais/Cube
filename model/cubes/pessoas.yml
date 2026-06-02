@@ -101,41 +101,41 @@ cubes:
       - name: count_pessoas_fisicas
         type: count
         filters:
-          - sql: ${CUBE}.ind_natureza_pessoa = 1
+          - sql: "{CUBE}.ind_natureza_pessoa = 1"
         description: Count of individuals (Pessoas Físicas)
         
       - name: count_pessoas_juridicas
         type: count
         filters:
-          - sql: ${CUBE}.ind_natureza_pessoa = 2
+          - sql: "{CUBE}.ind_natureza_pessoa = 2"
         description: Count of legal entities (Pessoas Jurídicas)
         
       - name: count_ativos
         type: count
         filters:
-          - sql: ${CUBE}.ind_status_pessoa = 1
+          - sql: "{CUBE}.ind_status_pessoa = 1"
         description: Count of active persons
         
       - name: count_inativos
         type: count
         filters:
-          - sql: ${CUBE}.ind_status_pessoa = 0
+          - sql: "{CUBE}.ind_status_pessoa = 0"
         description: Count of inactive persons
         
       - name: count_empresas
         type: count
         filters:
-          - sql: ${CUBE}.ind_pessoa_empresa = 1
+          - sql: "{CUBE}.ind_pessoa_empresa = 1"
         description: Count of companies
         
       - name: count_fornecedores_homologados
         type: count
         filters:
-          - sql: ${CUBE}.ind_forn_homolog = 1
+          - sql: "{CUBE}.ind_forn_homolog = 1"
         description: Count of homologated suppliers
         
       - name: count_restrito
         type: count
         filters:
-          - sql: ${CUBE}.ind_restrito = 1
+          - sql: "{CUBE}.ind_restrito = 1"
         description: Count of restricted persons
