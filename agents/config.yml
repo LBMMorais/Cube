@@ -1,0 +1,7 @@
+runtime: plain
+memory_mode: space
+
+# Views acessíveis pelo agente
+accessible_views:
+  - pessoas_view
+  - titulos_view
