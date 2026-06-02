@@ -1,3 +1,4 @@
+llm: auto
 runtime: plain
 memory_mode: space
 
