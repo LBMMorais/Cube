@@ -118,11 +118,6 @@ cubes:
         type: number
         description: Código do centro de custo/receita
         
-      - name: cod_tran_finan
-        sql: cod_tran_finan
-        type: number
-        description: Código da transação financeira
-        
       - name: cod_classe_ctb
         sql: cod_classe_ctb
         type: number
