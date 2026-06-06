@@ -3,6 +3,7 @@
 # Configures the AI agent for this Cube deployment.
 # Documentation: https://docs.cube.dev/admin/ai
 
+llm:auto
 runtime: plain
 memory_mode: space
 

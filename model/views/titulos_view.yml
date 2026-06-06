@@ -36,7 +36,6 @@ views:
           - cod_local_movto
           - cod_pessoa_banco
           - cod_centro_cr
-          - cod_tran_finan
           - cod_classe_ctb
           - cod_pedido
           - cod_registro_pai
