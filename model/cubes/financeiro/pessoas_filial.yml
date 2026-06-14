@@ -1,0 +1,18 @@
+cubes:
+  - name: pessoas_filial
+    sql_table: dbo.tb_pessoa
+    public: false
+
+    dimensions:
+      - name: cod_pessoa
+        sql: cod_pessoa
+        type: number
+        primary_key: true
+
+      - name: nom_pessoa
+        sql: nom_pessoa
+        type: string
+
+      - name: nom_reduzido_pessoa
+        sql: nom_reduzido_pessoa
+        type: string

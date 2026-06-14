@@ -9,7 +9,6 @@ views:
           - cod_titulo
           - num_titulo
           - seq_titulo
-          - cod_boleto
           
           # Dimensões de pessoas
           - cod_pessoa_empresa
@@ -21,57 +20,24 @@ views:
           - dta_emissao_titulo
           - dta_vcto_titulo
           - dta_movto_titulo
-          - dta_venc_fluxo
-          - dta_ini_correcao
-          - dta_ini_juro
-          - dta_desc_titulo
-          
+
           # Dimensões calculadas
           - natureza_titulo
           - status_titulo
           
           # Dimensões de códigos de referência
           - cod_tipo_titulo
-          - cod_indexador
-          - cod_local_movto
-          - cod_pessoa_banco
-          - cod_centro_cr
-          - cod_classe_ctb
-          - cod_pedido
-          - cod_registro_pai
-          - ind_registro_pai
           
           # Indicadores numéricos
           - ind_natureza_titulo
           - ind_status_titulo
-          - ind_status_conta
-          - ind_titulo_impresso
           - ind_baixa_cnab
-          
-          # Indicadores booleanos
-          - ind_descontado
-          - ind_nf_compl
-          - ind_fluxo_caixa
-          - ind_cartao
           
           # Percentuais
           - per_acr_titulo
           - per_multa_titulo
           - per_juro_titulo
           - per_desc_titulo
-          
-          # Quantidades
-          - qtd_quilo
-          - qtd_baixa_quilo
-          - qtd_vol
-          - qtd_saldo_vol
-          - num_dias_float
-          
-          # Campos de texto
-          - des_nosso_numero
-          - des_seu_numero
-          - des_codigo_barra
-          - des_codigo_barra_grafico
           
           # Medidas - Contagens
           - count
@@ -86,7 +52,6 @@ views:
           # Medidas - Valores
           - valor_total
           - saldo_total
-          - valor_antecipacao
           - valor_receber
           - valor_pagar
           - saldo_receber
@@ -99,12 +64,6 @@ views:
           - valor_minimo
           - valor_maximo
           - saldo_medio
-          
-          # Medidas - Quantidades
-          - total_quilos
-          - total_quilos_baixados
-          - total_volume
-          - saldo_volume
           
           # Medidas - Derivadas
           - percentual_quitacao
@@ -120,3 +79,10 @@ views:
         includes:
           - name: nom_pessoa
             alias: nome_pessoa_titulo
+
+      - join_path: titulos.pessoas_filial
+        includes:
+          - name: nom_reduzido_pessoa
+            alias: nome_reduzido_filial
+          - name: nom_pessoa
+            alias: nome_filial

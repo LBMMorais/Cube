@@ -13,6 +13,10 @@ cubes:
       - name: pessoas
         sql: "{CUBE}.cod_pessoa_titulo = {pessoas.cod_pessoa}"
         relationship: many_to_one
+
+      - name: pessoas_filial
+        sql: "{CUBE}.cod_pessoa_filial_titulo = {pessoas_filial.cod_pessoa}"
+        relationship: many_to_one
     
     dimensions:
       - name: cod_titulo
@@ -46,11 +50,6 @@ cubes:
         type: string
         description: Número do título
         
-      - name: cod_boleto
-        sql: cod_boleto
-        type: number
-        description: Código do boleto
-        
       - name: seq_titulo
         sql: seq_titulo
         type: string
@@ -71,73 +70,11 @@ cubes:
         sql: dta_movto_titulo
         type: time
         description: Data de movimentação do título
-        
-      - name: dta_ini_correcao
-        sql: dta_ini_correcao
-        type: time
-        description: Data início da correção
-        
-      - name: dta_ini_juro
-        sql: dta_ini_juro
-        type: time
-        description: Data início dos juros
-        
-      - name: dta_desc_titulo
-        sql: dta_desc_titulo
-        type: time
-        description: Data de desconto do título
-        
-      - name: dta_venc_fluxo
-        sql: dta_venc_fluxo
-        type: time
-        description: Data de vencimento para fluxo de caixa
-        
-      # Códigos de referência
-      - name: cod_indexador
-        sql: cod_indexador
-        type: number
-        description: Código do indexador
-        
-      - name: cod_local_movto
-        sql: cod_local_movto
-        type: number
-        description: Código do local de movimentação
-        
-      - name: cod_pessoa_banco
-        sql: cod_pessoa_banco
-        type: number
-        description: Código do banco
-        
+
       - name: cod_tipo_titulo
         sql: cod_tipo_titulo
         type: number
         description: Código do tipo de título
-        
-      - name: cod_centro_cr
-        sql: cod_centro_cr
-        type: number
-        description: Código do centro de custo/receita
-        
-      - name: cod_classe_ctb
-        sql: cod_classe_ctb
-        type: number
-        description: Código da classe contábil
-        
-      - name: cod_pedido
-        sql: cod_pedido
-        type: number
-        description: Código do pedido
-        
-      - name: cod_registro_pai
-        sql: cod_registro_pai
-        type: number
-        description: Código do registro pai
-        
-      # Indicadores numéricos
-      - name: ind_registro_pai
-        sql: ind_registro_pai
-        type: number
-        description: Indicador do tipo de registro pai
         
       - name: ind_natureza_titulo
         sql: ind_natureza_titulo
@@ -170,41 +107,10 @@ cubes:
         type: string
         description: Status do título (Aberto, Baixado ou Cancelado)
         
-      - name: ind_status_conta
-        sql: ind_status_conta
-        type: number
-        description: Indicador do status da conta
-        
-      - name: ind_titulo_impresso
-        sql: ind_titulo_impresso
-        type: number
-        description: Indicador se título foi impresso
-        
       - name: ind_baixa_cnab
         sql: ind_baixa_cnab
         type: number
         description: Indicador de baixa CNAB
-        
-      # Indicadores booleanos
-      - name: ind_descontado
-        sql: ind_descontado
-        type: boolean
-        description: Indica se título foi descontado
-        
-      - name: ind_nf_compl
-        sql: ind_nf_compl
-        type: boolean
-        description: Indica se é nota fiscal complementar
-        
-      - name: ind_fluxo_caixa
-        sql: ind_fluxo_caixa
-        type: boolean
-        description: Indica se entra no fluxo de caixa
-        
-      - name: ind_cartao
-        sql: ind_cartao
-        type: boolean
-        description: Indica se é pagamento com cartão
         
       # Percentuais
       - name: per_acr_titulo
@@ -227,61 +133,6 @@ cubes:
         type: number
         description: Percentual de desconto do título
         
-      # Quantidades
-      - name: qtd_quilo
-        sql: qtd_quilo
-        type: number
-        description: Quantidade em quilos
-        
-      - name: qtd_baixa_quilo
-        sql: qtd_baixa_quilo
-        type: number
-        description: Quantidade baixada em quilos
-        
-      - name: qtd_vol
-        sql: qtd_vol
-        type: number
-        description: Quantidade em volume
-        
-      - name: qtd_saldo_vol
-        sql: qtd_saldo_vol
-        type: number
-        description: Saldo de volume
-        
-      - name: num_dias_float
-        sql: num_dias_float
-        type: number
-        description: Número de dias de float
-        
-      # Campos de texto
-      - name: des_nosso_numero
-        sql: des_nosso_numero
-        type: string
-        description: Nosso número do banco
-        
-      - name: des_seu_numero
-        sql: des_seu_numero
-        type: string
-        description: Seu número
-        
-      - name: des_codigo_barra
-        sql: des_codigo_barra
-        type: string
-        description: Código de barras
-        
-      - name: des_codigo_barra_grafico
-        sql: des_codigo_barra_grafico
-        type: string
-        description: Código de barras gráfico
-        
-      - name: id_host
-        sql: id_host
-        type: string
-        
-      - name: id_row
-        sql: id_row
-        type: string
-    
     measures:
       - name: count
         type: count
@@ -342,11 +193,6 @@ cubes:
         sql: val_saldo_titulo
         type: sum
         description: Saldo total dos títulos
-        
-      - name: valor_antecipacao
-        sql: val_parcela_antec_tit
-        type: sum
-        description: Valor total de antecipações
         
       # Medidas de valores por natureza
       - name: valor_receber
@@ -412,27 +258,6 @@ cubes:
         sql: val_saldo_titulo
         type: avg
         description: Saldo médio dos títulos
-        
-      # Medidas de quantidades
-      - name: total_quilos
-        sql: qtd_quilo
-        type: sum
-        description: Total de quilos
-        
-      - name: total_quilos_baixados
-        sql: qtd_baixa_quilo
-        type: sum
-        description: Total de quilos baixados
-        
-      - name: total_volume
-        sql: qtd_vol
-        type: sum
-        description: Total de volume
-        
-      - name: saldo_volume
-        sql: qtd_saldo_vol
-        type: sum
-        description: Saldo total de volume
         
       # Medidas derivadas
       - name: percentual_quitacao
