@@ -19,14 +19,6 @@ cubes:
         type: string
         description: Descrição do tipo de título
         
-      - name: id_host
-        sql: id_host
-        type: string
-        
-      - name: id_row
-        sql: id_row
-        type: string
-    
     measures:
       - name: count
         type: count
