@@ -1,22 +1,38 @@
 views:
   - name: pessoas_view
-    description: Complete view of persons and companies data
+    title: Cadastro de Pessoas
+    description: Visão completa de pessoas e empresas
     
     cubes:
       - join_path: pessoas
         includes:
-          - cod_pessoa
-          - nom_pessoa
-          - nom_reduzido_pessoa
-          - dta_cadastramento
-          - tipo_pessoa
-          - status_pessoa
-          - ind_pessoa_empresa
-          - ind_forn_homolog
-          - count
-          - count_pessoas_fisicas
-          - count_pessoas_juridicas
-          - count_ativos
-          - count_inativos
-          - count_filiais
-          - count_fornecedores_homologados
+          - name: cod_pessoa
+            title: Código da Pessoa
+          - name: nom_pessoa
+            title: Nome da Pessoa
+          - name: nom_reduzido_pessoa
+            title: Nome Reduzido
+          - name: dta_cadastramento
+            title: Data de Cadastramento
+          - name: tipo_pessoa
+            title: Tipo de Pessoa
+          - name: status_pessoa
+            title: Status
+          - name: ind_pessoa_empresa
+            title: Indicador Pessoa/Empresa
+          - name: ind_forn_homolog
+            title: Indicador Fornecedor Homologado
+          - name: count
+            title: Quantidade de Pessoas
+          - name: count_pessoas_fisicas
+            title: Qtd. Pessoas Físicas
+          - name: count_pessoas_juridicas
+            title: Qtd. Pessoas Jurídicas
+          - name: count_ativos
+            title: Qtd. Ativos
+          - name: count_inativos
+            title: Qtd. Inativos
+          - name: count_filiais
+            title: Qtd. Filiais
+          - name: count_fornecedores_homologados
+            title: Qtd. Fornecedores Homologados

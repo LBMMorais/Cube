@@ -1,88 +1,129 @@
 views:
   - name: titulos_view
+    title: Títulos Financeiros
     description: Análise de títulos financeiros (contas a pagar e receber)
     
     cubes:
       - join_path: titulos
         includes:
           # Dimensões principais
-          - cod_titulo
-          - num_titulo
-          - seq_titulo
-          
-          # Dimensões de pessoas
-          - cod_pessoa_empresa
-          - cod_pessoa_titulo
-          - cod_pessoa_filial_titulo
-          - cod_pessoa_favorecido
+          - name: cod_titulo
+            title: Código do Título
+          - name: num_titulo
+            title: Número do Título
+          - name: seq_titulo
+            title: Sequência do Título
           
           # Dimensões de datas
-          - dta_emissao_titulo
-          - dta_vcto_titulo
-          - dta_movto_titulo
+          - name: dta_emissao_titulo
+            title: Data de Emissão
+          - name: dta_vcto_titulo
+            title: Data de Vencimento
+          - name: dta_movto_titulo
+            title: Data de Movimento
 
           # Dimensões calculadas
-          - natureza_titulo
-          - status_titulo
-          
-          # Dimensões de códigos de referência
-          - cod_tipo_titulo
+          - name: natureza_titulo
+            title: Natureza
+          - name: status_titulo
+            title: Status
           
           # Indicadores numéricos
-          - ind_natureza_titulo
-          - ind_status_titulo
-          - ind_baixa_cnab
+          - name: ind_natureza_titulo
+            title: Indicador de Natureza
+          - name: ind_status_titulo
+            title: Indicador de Status
+          - name: ind_baixa_cnab
+            title: Indicador Baixa CNAB
           
           # Percentuais
-          - per_acr_titulo
-          - per_multa_titulo
-          - per_juro_titulo
-          - per_desc_titulo
+          - name: per_acr_titulo
+            title: Percentual de Acréscimo
+          - name: per_multa_titulo
+            title: Percentual de Multa
+          - name: per_juro_titulo
+            title: Percentual de Juros
+          - name: per_desc_titulo
+            title: Percentual de Desconto
           
           # Medidas - Contagens
-          - count
-          - count_receber
-          - count_pagar
-          - count_abertos
-          - count_baixados
-          - count_cancelados
-          - count_receber_abertos
-          - count_pagar_abertos
+          - name: count
+            title: Quantidade de Títulos
+          - name: count_receber
+            title: Qtd. a Receber
+          - name: count_pagar
+            title: Qtd. a Pagar
+          - name: count_abertos
+            title: Qtd. Abertos
+          - name: count_baixados
+            title: Qtd. Baixados
+          - name: count_cancelados
+            title: Qtd. Cancelados
+          - name: count_receber_abertos
+            title: Qtd. a Receber Abertos
+          - name: count_pagar_abertos
+            title: Qtd. a Pagar Abertos
           
           # Medidas - Valores
-          - valor_total
-          - saldo_total
-          - valor_receber
-          - valor_pagar
-          - saldo_receber
-          - saldo_pagar
-          - valor_receber_aberto
-          - valor_pagar_aberto
+          - name: valor_total
+            title: Valor Total
+          - name: saldo_total
+            title: Saldo Total
+          - name: valor_receber
+            title: Valor a Receber
+          - name: valor_pagar
+            title: Valor a Pagar
+          - name: saldo_receber
+            title: Saldo a Receber
+          - name: saldo_pagar
+            title: Saldo a Pagar
+          - name: valor_receber_aberto
+            title: Valor a Receber (Aberto)
+          - name: valor_pagar_aberto
+            title: Valor a Pagar (Aberto)
           
           # Medidas - Estatísticas
-          - valor_medio
-          - valor_minimo
-          - valor_maximo
-          - saldo_medio
+          - name: valor_medio
+            title: Valor Médio
+          - name: valor_minimo
+            title: Valor Mínimo
+          - name: valor_maximo
+            title: Valor Máximo
+          - name: saldo_medio
+            title: Saldo Médio
           
           # Medidas - Derivadas
-          - percentual_quitacao
-          - valor_pago
-          - saldo_liquido
+          - name: percentual_quitacao
+            title: Percentual de Quitação
+          - name: valor_pago
+            title: Valor Pago
+          - name: saldo_liquido
+            title: Saldo Líquido
       
       - join_path: titulos.tipos_titulo
         prefix: true
         includes:
-          - des_tipo_titulo
+          - name: des_tipo_titulo
+            title: Tipo Titulo
       
       - join_path: titulos.pessoas
         includes:
           - name: nom_pessoa
             alias: nome_pessoa_titulo
+            title: Nome Pessoa
+
+          - name: count_pessoas_fisicas
+            title: Qtd. Pessoas Físicas
+
+          - name: count_pessoas_juridicas
+            title: Qtd. Pessoas Jurídicas
 
       - join_path: titulos.pessoas_filial
         includes:
           - name: nom_reduzido_pessoa
             alias: nome_reduzido_filial
+            title: Filial
+
           - name: nom_pessoa
             alias: nome_filial
+            title: Nome Filial
