@@ -1,0 +1,132 @@
+cubes:
+  - name: gastos_equipamento
+    public: false
+    description: |
+      Gastos com equipamentos consolidados de duas origens:
+      1) Notas Fiscais (tb_item_nf + tb_nota_fiscal) - compras diretas
+      2) Requisições (tb_item_requis + tb_requis) - peças do estoque aplicadas
+      Filtros da SP: grupo_item=6, subgrupos (24,26,27,36,40,41,42,43,44),
+      status NF=9, tipo_operacao<>207, qtd líquida>0, status requis=9, val>0.
+
+    sql: |
+      SELECT
+        it.cod_item_nf AS cod_registro,
+        nf.dta_movto_nf AS dta_movto,
+        nf.cod_pessoa_filial AS cod_pessoa_filial,
+        eq.cod_subgrupo_item AS cod_subgrupo_item,
+        it.cod_equipamento AS cod_equipamento,
+        CONVERT(FLOAT, it.val_total_item_nf) AS val_gasto,
+        'NF' AS origem
+      FROM
+        dbo.tb_item_nf it
+        INNER JOIN dbo.tb_nota_fiscal nf ON it.cod_nota_fiscal = nf.cod_nota_fiscal
+        INNER JOIN dbo.tb_item eq ON eq.cod_item = it.cod_equipamento
+      WHERE
+        eq.cod_grupo_item = 6
+        AND eq.cod_subgrupo_item IN (24,26,27,36,40,41,42,43,44)
+        AND nf.ind_tipo_operacao <> 207
+        AND nf.ind_status_nf = 9
+        AND (ISNULL(it.qtd_item_nf, 1) - ISNULL(it.qtd_dev_item_nf, 0)) > 0
+      UNION ALL
+      SELECT
+        ir.cod_item_requis AS cod_registro,
+        rq.dta_requis AS dta_movto,
+        rq.cod_pessoa_filial_destino AS cod_pessoa_filial,
+        eq.cod_subgrupo_item AS cod_subgrupo_item,
+        ir.cod_equipamento AS cod_equipamento,
+        CONVERT(FLOAT, ir.val_item_requis) AS val_gasto,
+        'REQ' AS origem
+      FROM
+        dbo.tb_item_requis ir
+        INNER JOIN dbo.tb_requis rq ON ir.cod_requis = rq.cod_requis
+        INNER JOIN dbo.tb_item eq ON eq.cod_item = ir.cod_equipamento
+      WHERE
+        eq.cod_grupo_item = 6
+        AND eq.cod_subgrupo_item IN (24,26,27,36,40,41,42,43,44)
+        AND rq.ind_status_requis = 9
+        AND ir.val_item_requis > 0
+
+    joins:
+      - name: equipamentos
+        sql: "{CUBE}.cod_equipamento = {equipamentos}.cod_item"
+        relationship: many_to_one
+
+      - name: filiais
+        sql: "{CUBE}.cod_pessoa_filial = {filiais}.cod_pessoa"
+        relationship: many_to_one
+
+    dimensions:
+      - name: id
+        sql: "CONCAT({CUBE}.origem, '-', {CUBE}.cod_registro)"
+        type: string
+        primary_key: true
+        description: Chave única composta (origem + código do registro)
+
+      - name: cod_registro
+        sql: "{CUBE}.cod_registro"
+        type: number
+        description: Código do registro (item NF ou item requisição)
+
+      - name: origem
+        sql: "{CUBE}.origem"
+        type: string
+        description: "Origem do gasto: NF (Nota Fiscal) ou REQ (Requisição)"
+
+      - name: dta_movto
+        sql: "{CUBE}.dta_movto"
+        type: time
+        description: Data do movimento (data da NF ou data da requisição)
+
+      - name: cod_pessoa_filial
+        sql: "{CUBE}.cod_pessoa_filial"
+        type: number
+        description: Código da filial
+
+      - name: cod_subgrupo_item
+        sql: "{CUBE}.cod_subgrupo_item"
+        type: number
+        description: Código do subgrupo do equipamento
+
+      - name: cod_equipamento
+        sql: "{CUBE}.cod_equipamento"
+        type: number
+        description: Código do equipamento
+
+      - name: val_gasto
+        sql: "{CUBE}.val_gasto"
+        type: number
+        description: Valor individual do gasto
+
+    measures:
+      - name: total_gastos
+        sql: "{CUBE}.val_gasto"
+        type: sum
+        description: Valor total dos gastos com equipamentos
+
+      - name: count
+        type: count
+        description: Quantidade de registros de gastos
+
+      - name: total_gastos_nf
+        sql: "{CUBE}.val_gasto"
+        type: sum
+        filters:
+          - sql: "{CUBE}.origem = 'NF'"
+        description: Total de gastos originados de Notas Fiscais
+
+      - name: total_gastos_req
+        sql: "{CUBE}.val_gasto"
+        type: sum
+        filters:
+          - sql: "{CUBE}.origem = 'REQ'"
+        description: Total de gastos originados de Requisições
+
+      - name: media_gastos
+        sql: "{CUBE}.val_gasto"
+        type: avg
+        description: Valor médio dos gastos com equipamentos
+
+      - name: count_equipamentos
+        sql: "{CUBE}.cod_equipamento"
+        type: count_distinct
+        description: Quantidade de equipamentos distintos com gastos

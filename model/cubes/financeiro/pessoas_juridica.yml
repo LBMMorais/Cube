@@ -1,0 +1,56 @@
+cubes:
+  - name: pessoas_juridica
+    sql_table: dbo.tb_pessoa_juridica
+    public: false
+    description: Dados complementares de pessoas jurídicas (CNPJ, inscrições, fundação, etc.)
+
+    dimensions:
+      - name: cod_pessoa_juridica
+        sql: cod_pessoa_juridica
+        type: number
+        primary_key: true
+
+      - name: num_cgc
+        sql: num_cgc
+        type: string
+        description: Número do CNPJ (CGC)
+
+      - name: num_cnpj_cnab
+        sql: num_cnpj_cnab
+        type: string
+        description: Número do CNPJ no formato CNAB
+
+      - name: num_insc_estadual
+        sql: num_insc_estadual
+        type: string
+        description: Número da inscrição estadual
+
+      - name: num_insc_municipal
+        sql: num_insc_municipal
+        type: string
+        description: Número da inscrição municipal
+
+      - name: dta_fundacao
+        sql: dta_fundacao
+        type: time
+        description: Data de fundação da empresa
+
+      - name: cod_pessoa_filial_pai
+        sql: cod_pessoa_filial_pai
+        type: number
+        description: Código da pessoa filial pai (matriz)
+
+      - name: cod_tipo_sociedade
+        sql: cod_tipo_sociedade
+        type: number
+        description: Código do tipo de sociedade
+
+      - name: nom_contato
+        sql: nom_contato
+        type: string
+        description: Nome do contato responsável
+
+    measures:
+      - name: count
+        type: count
+        description: Total de pessoas jurídicas

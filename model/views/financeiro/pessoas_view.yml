@@ -36,3 +36,33 @@ views:
             title: Qtd. Filiais
           - name: count_fornecedores_homologados
             title: Qtd. Fornecedores Homologados
+
+      - join_path: pessoas.pessoas_fisica
+        prefix: true
+        includes:
+          - name: num_cpf
+            title: CPF
+          - name: sexo
+            title: Sexo
+          - name: dta_nascimento
+            title: Data de Nascimento
+          - name: num_doc_identidade
+            title: RG
+          - name: num_insc_pis
+            title: Inscrição PIS
+          - name: nom_contato
+            title: Contato (PF)
+
+      - join_path: pessoas.pessoas_juridica
+        prefix: true
+        includes:
+          - name: num_cgc
+            title: CNPJ
+          - name: num_insc_estadual
+            title: Inscrição Estadual
+          - name: num_insc_municipal
+            title: Inscrição Municipal
+          - name: dta_fundacao
+            title: Data de Fundação
+          - name: nom_contato
+            title: Contato (PJ)

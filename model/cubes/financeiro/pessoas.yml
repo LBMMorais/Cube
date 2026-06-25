@@ -3,7 +3,14 @@ cubes:
     sql_table: dbo.tb_pessoa
     public: false
     
-    joins: []
+    joins:
+      - name: pessoas_fisica
+        sql: "{CUBE}.cod_pessoa = {pessoas_fisica}.cod_pessoa_fisica"
+        relationship: one_to_one
+
+      - name: pessoas_juridica
+        sql: "{CUBE}.cod_pessoa = {pessoas_juridica}.cod_pessoa_juridica"
+        relationship: one_to_one
     
     dimensions:
       - name: cod_pessoa
