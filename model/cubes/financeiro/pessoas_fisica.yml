@@ -1,0 +1,56 @@
+cubes:
+  - name: pessoas_fisica
+    sql_table: dbo.tb_pessoa_fisica
+    public: false
+    description: Dados complementares de pessoas físicas (CPF, sexo, nascimento, etc.)
+
+    dimensions:
+      - name: cod_pessoa_fisica
+        sql: cod_pessoa_fisica
+        type: number
+        primary_key: true
+
+      - name: num_cpf
+        sql: num_cpf
+        type: string
+        description: Número do CPF
+
+      - name: ind_sexo
+        sql: ind_sexo
+        type: number
+        description: Indicador de sexo (1=Masculino, 2=Feminino)
+
+      - name: sexo
+        sql: |
+          CASE
+            WHEN {CUBE}.ind_sexo = 1 THEN 'Masculino'
+            WHEN {CUBE}.ind_sexo = 2 THEN 'Feminino'
+            ELSE 'Não Informado'
+          END
+        type: string
+        description: Sexo da pessoa (Masculino/Feminino)
+
+      - name: dta_nascimento
+        sql: dta_nascimento
+        type: time
+        description: Data de nascimento
+
+      - name: num_doc_identidade
+        sql: num_doc_identidade
+        type: string
+        description: Número do documento de identidade (RG)
+
+      - name: num_insc_pis
+        sql: num_insc_pis
+        type: string
+        description: Número de inscrição no PIS
+
+      - name: nom_contato
+        sql: nom_contato
+        type: string
+        description: Nome do contato
+
+    measures:
+      - name: count
+        type: count
+        description: Total de pessoas físicas

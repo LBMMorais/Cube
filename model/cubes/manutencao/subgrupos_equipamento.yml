@@ -1,0 +1,26 @@
+cubes:
+  - name: subgrupos_equipamento
+    sql_table: dbo.tb_subgrupo_item
+    public: false
+    description: >
+      Subgrupos de equipamentos. Subgrupos relevantes para manutenção:
+      24-Veículos Betoneiras, 26-Bomba de Concreto, 27-Balança,
+      36-Pá Carregadeira, 40-Silo Graneleiro, 41-Tow-Go,
+      42-Veículo de Apoio, 43-Veículo Carroceria, 44-Veículo Munk.
+
+    dimensions:
+      - name: cod_subgrupo_item
+        sql: "{CUBE}.cod_subgrupo_item"
+        type: number
+        primary_key: true
+        description: Código do subgrupo do equipamento
+
+      - name: nom_subgrupo_item
+        sql: "{CUBE}.nom_subgrupo_item"
+        type: string
+        description: Nome do subgrupo do equipamento
+
+    measures:
+      - name: count
+        type: count
+        description: Quantidade de subgrupos

@@ -1,0 +1,47 @@
+views:
+  - name: gastos_equipamento_view
+    title: Gastos com Equipamentos
+    description: |
+      Visão consolidada de gastos com equipamentos de manutenção.
+      Combina gastos de Notas Fiscais (compras diretas) e Requisições (peças do estoque).
+      Permite análise por tempo, filial, subgrupo e equipamento.
+
+    cubes:
+      - join_path: gastos_equipamento
+        includes:
+          - name: origem
+            title: Origem do Gasto
+          - name: dta_movto
+            title: Data do Movimento
+          - name: total_gastos
+            title: Total de Gastos
+          - name: count
+            title: Qtd. Registros
+          - name: total_gastos_nf
+            title: Gastos via Nota Fiscal
+          - name: total_gastos_req
+            title: Gastos via Requisição
+          - name: media_gastos
+            title: Gasto Médio
+          - name: count_equipamentos
+            title: Qtd. Equipamentos Distintos
+
+      - join_path: gastos_equipamento.filiais
+        prefix: true
+        includes:
+          - name: nom_reduzido_pessoa
+            title: Filial
+
+      - join_path: gastos_equipamento.equipamentos
+        prefix: true
+        includes:
+          - name: num_item
+            title: Código do Equipamento
+          - name: nom_item
+            title: Nome do Equipamento
+
+      - join_path: gastos_equipamento.equipamentos.subgrupos_equipamento
+        prefix: true
+        includes:
+          - name: nom_subgrupo_item
+            title: Subgrupo do Equipamento

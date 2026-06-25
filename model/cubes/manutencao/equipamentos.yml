@@ -1,0 +1,56 @@
+cubes:
+  - name: equipamentos
+    sql_table: dbo.tb_item
+    public: false
+    description: >
+      Cadastro de equipamentos (itens do grupo 6 - Equipamentos).
+      Subgrupos relevantes: 24-Veículos Betoneiras, 26-Bomba de Concreto,
+      27-Balança, 36-Pá Carregadeira, 40-Silo Graneleiro, 41-Tow-Go,
+      42-Veículo de Apoio, 43-Veículo Carroceria, 44-Veículo Munk.
+
+    joins:
+      - name: subgrupos_equipamento
+        sql: "{CUBE}.cod_subgrupo_item = {subgrupos_equipamento}.cod_subgrupo_item"
+        relationship: many_to_one
+
+    dimensions:
+      - name: cod_item
+        sql: "{CUBE}.cod_item"
+        type: number
+        primary_key: true
+        description: Código do equipamento
+
+      - name: nom_item
+        sql: "{CUBE}.nom_item"
+        type: string
+        description: Nome completo do equipamento
+
+      - name: num_item
+        sql: "{CUBE}.num_item"
+        type: string
+        description: Número/código de identificação do equipamento (ex. VA088, BT001)
+
+      - name: cod_grupo_item
+        sql: "{CUBE}.cod_grupo_item"
+        type: number
+        description: Código do grupo do item (6 = Equipamentos)
+
+      - name: cod_subgrupo_item
+        sql: "{CUBE}.cod_subgrupo_item"
+        type: number
+        description: Código do subgrupo do equipamento
+
+      - name: num_motor_item
+        sql: "{CUBE}.num_motor_item"
+        type: string
+        description: Número do motor do equipamento
+
+      - name: ind_veiculo_terceiro
+        sql: "{CUBE}.ind_veiculo_terceiro"
+        type: boolean
+        description: Indicador se é veículo de terceiro
+
+    measures:
+      - name: count
+        type: count
+        description: Quantidade de equipamentos

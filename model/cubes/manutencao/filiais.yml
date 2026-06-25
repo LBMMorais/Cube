@@ -1,0 +1,29 @@
+cubes:
+  - name: filiais
+    sql_table: dbo.tb_pessoa
+    public: false
+    description: >
+      Filiais (unidades) da empresa, utilizadas como dimensão
+      nos gastos de equipamentos.
+
+    dimensions:
+      - name: cod_pessoa
+        sql: "{CUBE}.cod_pessoa"
+        type: number
+        primary_key: true
+        description: Código da pessoa/filial
+
+      - name: nom_pessoa
+        sql: "{CUBE}.nom_pessoa"
+        type: string
+        description: Nome completo da filial
+
+      - name: nom_reduzido_pessoa
+        sql: ISNULL({CUBE}.nom_reduzido_pessoa, 'CDC-000')
+        type: string
+        description: Nome reduzido da filial
+
+    measures:
+      - name: count
+        type: count
+        description: Quantidade de filiais
