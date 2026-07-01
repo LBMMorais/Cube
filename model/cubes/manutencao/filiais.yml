@@ -29,7 +29,7 @@ cubes:
             dashboard: movimentacao-por-filial
             params:
               - key: gastos_equipamento_view.filiais_nom_reduzido_pessoa
-                value: "{nom_reduzido_pessoa}"
+                value: "{CUBE}.nom_reduzido_pessoa"
 
     measures:
       - name: count
