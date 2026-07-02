@@ -29,14 +29,6 @@ cubes:
         sql: "{CUBE}.num_item"
         type: string
         description: Número/código de identificação do equipamento (ex. VA088, BT001)
-        links:
-          - name: movimentacao_equipamento
-            label: Ver movimentações do equipamento
-            icon: layout-dashboard
-            dashboard: movimentacao-por-equipamento
-            params:
-              - key: gastos_equipamento_view.equipamentos_num_item
-                value: "{CUBE}.num_item"
 
       - name: cod_grupo_item
         sql: "{CUBE}.cod_grupo_item"
